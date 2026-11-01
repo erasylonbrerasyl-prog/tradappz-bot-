@@ -252,22 +252,22 @@ async def analyze_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     if not BOT_TOKEN:
-        raise SystemExit("TELEGRAM_BOT_TOKEN .env ішінде көрсетілмеген.")
+        raise SystemExit("TELEGRAM_BOT_TOKEN көрсетілмеген.")
     if not TWELVE_DATA_KEY:
-        raise SystemExit("TWELVE_DATA_API_KEY .env ішінде көрсетілмеген.")
+        raise SystemExit("TWELVE_DATA_API_KEY көрсетілмеген.")
+
     app = Application.builder().token(BOT_TOKEN).build()
+
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CommandHandler("analyze", analyze_command))
     app.add_handler(CallbackQueryHandler(callbacks))
-        log.info("Bot is starting...")
 
-    try:
-        asyncio.get_event_loop()
-    except RuntimeError:
-        asyncio.set_event_loop(asyncio.new_event_loop())
+    log.info("Bot is starting...")
 
+    asyncio.set_event_loop(asyncio.new_event_loop())
     app.run_polling()
+
 
 if __name__ == "__main__":
     main()
