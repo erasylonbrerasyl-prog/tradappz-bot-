@@ -260,7 +260,13 @@ def main():
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CommandHandler("analyze", analyze_command))
     app.add_handler(CallbackQueryHandler(callbacks))
-    log.info("Bot is starting...")
+        log.info("Bot is starting...")
+
+    try:
+        asyncio.get_event_loop()
+    except RuntimeError:
+        asyncio.set_event_loop(asyncio.new_event_loop())
+
     app.run_polling()
 
 if __name__ == "__main__":
