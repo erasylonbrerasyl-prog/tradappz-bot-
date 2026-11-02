@@ -1,62 +1,29 @@
-# Pocket Option AI — Telegram оқу боты
+# TradeMind AI Telegram Bot
 
-Бұл жоба Telegram ішінде актив пен уақыт аралығын таңдап, нарық деректерін және EMA/RSI/MACD көрсеткіштерін қарайтын оқу ботын іске қосады.
+Kazakh-language educational market-analysis Telegram bot.
 
-## Қауіпсіздік және шектеулер
-- Бот Pocket Option-ға кірмейді, сауда ашпайды және брокер аккаунтына қосылмайды.
-- Нәтиже BUY/SELL нұсқауы емес; бағыттық индикаторлық қорытынды ғана.
-- OTC бағалары жалпы Forex/биржа деректерімен сәйкес келмеуі мүмкін.
-- 1/5/15 минуттық деректер провайдердің тарифіне, нарық уақытына және актив қолдауына тәуелді.
-- API кілттерін ешкімге жібермеңіз және кодқа ашық жазбаңыз.
+## Features
+1. Chart screenshot analysis (OpenAI vision; optional API key)
+2. RSI, MACD, EMA indicators
+3. General market headlines (Finnhub; optional API key)
+4. Asset quotes (Twelve Data)
+5. Learning mode for FVG, liquidity, SNR, SMC and indicators
+6. Price alerts (SQLite; checked every 60 seconds)
+7. Technical-analysis explainer with conditional bullish/bearish scenarios
 
-## 1. Telegram бот токенін алу
-Telegram-да ресми `@BotFather` арқылы жаңа бот жасап, токен алыңыз. Токенді ешкімге жарияламаңыз.
+The bot is an educational/demo tool. It does not guarantee market direction and does not issue instructions to trade real money.
 
-## 2. API кілттері
-- Twelve Data: https://twelvedata.com/
-- Alpha Vantage: https://www.alphavantage.co/
+## Render setup
+- Runtime: Python 3.12
+- Build command: `pip install -r requirements.txt`
+- Start command: `python bot.py`
+- Service type: Background Worker
 
-Twelve Data негізгі провайдер. Alpha Vantage акция деректері үшін қосалқы провайдер ретінде ғана қолданылады. Провайдерлердің тегін тарифтері сұрау жиілігін және қолжетімді активтерді шектеуі мүмкін.
+Set these Environment Variables in Render:
+- `TELEGRAM_BOT_TOKEN` (required)
+- `TWELVE_DATA_API_KEY` (required for quotes/indicators/alerts)
+- `OPENAI_API_KEY` (required for image analysis)
+- `FINNHUB_API_KEY` (optional; news)
+- `VISION_MODEL` (optional; defaults to `gpt-4.1-mini`)
 
-## 3. Орнату
-Python 3.10 немесе жаңасын орнатыңыз. Жоба қалтасында терминал ашып:
-
-```bash
-pip install -r requirements.txt
-```
-
-`.env.example` файлын `.env` деп көшіріп, ішіне токендер мен API кілттерін енгізіңіз.
-
-Linux/macOS:
-```bash
-cp .env.example .env
-```
-
-Windows:
-```powershell
-copy .env.example .env
-```
-
-## 4. Іске қосу
-Код `.env` файлын автоматты оқымайды, сондықтан айнымалыларды ортаға жүктеңіз. Ең оңайы — `python-dotenv` қосу үшін `bot.py` файлының бас жағына мына екі жолды қосу:
-
-```python
-from dotenv import load_dotenv
-load_dotenv()
-```
-
-Содан кейін:
-```bash
-python bot.py
-```
-
-Telegram-да өз ботыңды ашып `/start` жібер.
-
-## Мәзір
-1. Анализ жасау
-2. Актив таңдау
-3. 1 минут / 5 минут / 15 минут таңдау
-4. Нарық деректерін алу және индикаторларды есептеу
-
-## Қолдау
-Егер API провайдері лимит қатесін берсе, тариф/лимитті тексер немесе кейінірек қайтала.
+Never paste API keys into chat or commit them to GitHub. Add them only in Render Environment.
